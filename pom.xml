@@ -3,10 +3,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mulesoft.training</groupId>
-	<artifactId>maven_project-ekc</artifactId>
+	<artifactId>maven-project-ekc</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule</packaging>
-	<name>Mule maven_project Application</name>
+	<name>Mule maven-project Application</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,41 +14,33 @@
 
 		<mule.version>3.9.0</mule.version>
 		<mule.tools.version>1.2</mule.tools.version>
-		<activemq.version>5.15.8</activemq.version>
 		<derby.version>10.14.2.0</derby.version>
-		<uid>ekonakondla@in.imshealth.com</uid>
+		<activemq.version>5.15.8</activemq.version>
+		<uid>erannachinna2</uid>
 		<pwd></pwd>
 	</properties>
 
 	<build>
 		<plugins>
-
-
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>2.0</version>
+				<artifactId>mule-app-maven-plugin</artifactId>
+				<version>${mule.tools.version}</version>
+				<extensions>true</extensions>
 				<configuration>
-					<deploymentType>cloudhub</deploymentType>
-					<muleVersion>${mule.version}</muleVersion>
-					<username>${uid}</username>
-					<password>${pwd}</password>
-					<workerType>Micro</workerType>
-					<redeploy>true</redeploy>
-					<environment>Sandbox</environment>
+					<copyToAppsDirectory>true</copyToAppsDirectory>
 				</configuration>
-				<executions>
-					<execution>
-						<id>deploy</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
-
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -76,18 +68,29 @@
 					</execution>
 				</executions>
 			</plugin>
-			
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<version>2.5.2</version>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<deploymentType>cloudhub</deploymentType>
+					<muleVersion>${mule.version}</muleVersion>
+					<username>${uid}</username>
+					<password>${pwd}</password>
+					<workerType>Micro</workerType>
+					<redeploy>true</redeploy>
+					<environment>Sandbox</environment>
+				</configuration>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.2</version>
-			</plugin>
-			
 		</plugins>
 	</build>
 
@@ -149,9 +152,8 @@
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-module-xml</artifactId>
 			<version>${mule.version}</version>
+			<scope>provided</scope>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
@@ -161,6 +163,7 @@
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-client</artifactId>
 			<version>${activemq.version}</version>
+
 		</dependency>
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
@@ -172,9 +175,6 @@
 			<artifactId>activemq-kahadb-store</artifactId>
 			<version>${activemq.version}</version>
 		</dependency>
-
-
-
 		<!-- for testing -->
 		<dependency>
 			<groupId>org.mule.tests</groupId>
@@ -213,7 +213,6 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
 
 	<repositories>
 		<repository>
